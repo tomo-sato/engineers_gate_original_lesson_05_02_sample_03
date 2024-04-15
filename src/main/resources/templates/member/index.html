@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <!-- ======= Head ======= -->
-<div th:replace="~{common/shoulder_fragment::head(title = 'SNSサイト - アカウント作成')}"></div>
+<div th:replace="~{common/shoulder_fragment::head(title = 'SNSサイト - メンバー登録')}"></div>
 
 <body>
 
@@ -19,8 +19,8 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">アカウントを作成します。</h5>
-                    <p class="text-center small">個人情報を入力してアカウントを作成してください。</p>
+                    <h5 class="card-title text-center pb-0 fs-4" th:text="${isModify} ? 'メンバーを編集します。' : 'メンバーを登録します。'">メンバーを登録します。</h5>
+                    <p class="text-center small">個人情報を入力してメンバーを登録してください。</p>
                   </div>
 
                   <div th:if="${validationErrors != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -31,7 +31,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="post" novalidate th:action="@{/account/regist}" th:object="${requestAccount}">
+                  <form class="row g-3 needs-validation" method="post" novalidate th:action="@{/member/regist/{id}(id=${membersId})}" th:object="${requestMember}">
                     <div class="col-12">
                       <label for="yourName" class="form-label">お名前</label>
                       <input type="text" name="name" class="form-control" id="yourName" maxlength="32" required th:field="*{name}">
@@ -44,28 +44,13 @@
                       <div class="invalid-feedback">有効なメールアドレスを入力してください。</div>
                     </div>
 
-                    <div class="col-12">
-                      <label for="yourUsername" class="form-label">ログインID</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="loginId" class="form-control" id="yourUsername" maxlength="32" required th:field="*{loginId}">
-                        <div class="invalid-feedback">ログインIDを入力してください。</div>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourPassword" class="form-label">パスワード</label>
-	                      <input type="password" name="password" class="form-control" id="yourPassword" maxlength="32" required th:field="*{password}">
-                      <div class="invalid-feedback">パスワードを入力してください。</div>
-                    </div>
-
                     <p />
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">アカウント作成</button>
+                      <button class="btn btn-primary w-100" type="submit" th:text="${isModify} ? 'メンバーを編集する' : 'メンバーを登録する'">メンバーを登録する</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">すでにアカウントを持っています。 <a href="/">ログインページへ</a></p>
+                      <p class="small mb-0"><a href="/">メンバー一覧へ</a></p>
                     </div>
                   </form>
 

@@ -17,22 +17,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "users")
-public class Users extends EntityBase {
+@Table(name = "members")
+public class Members extends EntityBase {
 
 	/** ID */
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	/** ログインID */
-	@Column(name = "login_id", nullable = false)
-	private String loginId;
-
-	/** パスワード */
-	@Column(name = "password", nullable = false)
-	private String password;
 
 	/** 名前 */
 	@Column(name = "name", nullable = false)
@@ -41,12 +33,4 @@ public class Users extends EntityBase {
 	/** メールアドレス */
 	@Column(name = "email_address", nullable = false)
 	private String emailAddress;
-
-	/** プロフィールアイコンURI */
-	@Column(name = "icon_uri", nullable = true)
-	private String iconUri;
-
-	/** プロフィール */
-	@Column(name = "profile", nullable = true)
-	private String profile;
 }

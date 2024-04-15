@@ -18,21 +18,17 @@ CREATE SCHEMA IF NOT EXISTS `eg_members` DEFAULT CHARACTER SET utf8 ;
 USE `eg_members` ;
 
 -- -----------------------------------------------------
--- Table `eg_members`.`users`
+-- Table `eg_members`.`members`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `eg_members`.`users` (
+CREATE TABLE IF NOT EXISTS `eg_members`.`members` (
   `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `login_id` VARCHAR(32) NOT NULL COMMENT 'ログインID',
-  `password` VARCHAR(32) NOT NULL COMMENT 'パスワード',
   `name` VARCHAR(32) NOT NULL COMMENT '名前',
   `email_address` VARCHAR(256) NOT NULL COMMENT 'メールアドレス',
-  `icon_uri` VARCHAR(2000) NULL COMMENT 'プロフィールアイコンURI',
-  `profile` TEXT NULL COMMENT 'プロフィール',
   `created` DATETIME NOT NULL COMMENT '作成日時',
   `updated` DATETIME NOT NULL COMMENT '更新日時',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-COMMENT = 'ユーザー';
+COMMENT = 'メンバー';
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

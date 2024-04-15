@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class RequestAccount extends DtoBase {
+public class RequestMember extends DtoBase {
 
 	/** お名前 */
 	@NotBlank(message = "お名前を入力してください。")
@@ -23,14 +23,4 @@ public class RequestAccount extends DtoBase {
 	@NotBlank(message = "メールアドレスを入力してください。")
 	@Size(max = 256, message = "メールアドレスは最大256文字です。")
 	private String emailAddress;
-
-	/** ログインID */
-	@NotBlank(message = "ログインIDを入力してください。")
-	@Size(max = 32, message = "ログインIDは最大32文字です。")
-	private String loginId;
-
-	/** パスワード */
-	@NotBlank(message = "パスワードを入力してください。")
-	@Size(max = 32, message = "パスワードは最大32文字です。")
-	private String password;
 }

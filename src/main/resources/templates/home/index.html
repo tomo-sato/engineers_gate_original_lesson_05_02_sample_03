@@ -18,7 +18,7 @@
         <div class="col-lg-8">
           <div class="card info-card revenue-card">
             <div class="filter">
-              <a th:href="@{/account}" type="button" class="btn btn-primary btn-lg">登録</a>
+              <a th:href="@{/member}" type="button" class="btn btn-primary btn-lg">登録</a>
             </div>
 
             <div class="card-body">
@@ -37,45 +37,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row"><a href="#">1</a></th>
-                    <td><a href="#">浅井 那奈</a></td>
-                    <td>asai_nana@example.com</td>
-                    <td>2016-05-25</td>
-                    <td>2016-05-25</td>
-                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#">2</a></th>
-                    <td><a href="#">根本 徹</a></td>
-                    <td>nemoto_tohru@example.com</td>
-                    <td>2014-12-05</td>
-                    <td>2014-12-05</td>
-                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#">3</a></th>
-                    <td><a href="#">西井 弘也</a></td>
-                    <td>nishii_hironari@example.com</td>
-                    <td>2011-08-12</td>
-                    <td>2011-08-12</td>
-                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#">4</a></th>
-                    <td><a href="#">菅谷 千夏</a></td>
-                    <td>sugaya_chinatsu@example.com</td>
-                    <td>2012-06-11</td>
-                    <td>2012-06-11</td>
-                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#">5</a></th>
-                    <td><a href="#">飯田 なつみ</a></td>
-                    <td>iida_natsumi@example.com</td>
-                    <td>2011-04-19</td>
-                    <td>2011-04-19</td>
-                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
+                  <tr th:each="members:${membersList}">
+                    <th scope="row"><a th:href="@{/member/{id}(id=${members.id})}" th:text="${members.id}">1</a></th>
+                    <td><a th:href="@{/member/{id}(id=${members.id})}" th:text="${members.name}">浅井 那奈</a></td>
+                    <td th:text="${members.emailAddress}">asai_nana@example.com</td>
+                    <td th:text="${#dates.format(members.created, 'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
+                    <td th:text="${#dates.format(members.updated, 'yyyy-MM-dd HH:mm:ss')}">2016-05-25</td>
+                    <td><a th:href="@{/member/delete/{id}(id=${members.id})}" type="button" class="btn btn-danger btn-sm">削除</a></td>
                   </tr>
                 </tbody>
               </table>
