@@ -30,4 +30,8 @@ public interface MembersRepository extends PagingAndSortingRepository<Members, L
 	 */
 	List<Members> findByOrderByIdAsc();
 
+	/**
+	 * メンバーを削除する。
+	 */
+	void delete(Members members);
 }

@@ -18,11 +18,16 @@
         <div class="col-lg-8">
           <div class="card info-card revenue-card">
             <div class="filter">
-              <a th:href="@{/member}" type="button" class="btn btn-primary btn-lg">登録</a>
+              <a th:href="@{/member}" type="button" class="btn btn-primary">登録</a>
             </div>
 
             <div class="card-body">
               <h5 class="card-title">メンバー一覧</h5>
+
+              <div th:if="${isSuccess}" class="alert alert-success alert-dismissible fade show" role="alert">
+                メンバーを削除しました。
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
 
               <!-- Table with stripped rows -->
               <table class="table table-striped">

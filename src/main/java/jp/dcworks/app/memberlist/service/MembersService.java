@@ -92,4 +92,11 @@ public class MembersService {
 	public Iterable<Members> findAll() {
 		return repository.findAll();
 	}
+
+	/**
+	 * メンバーを削除する。
+	 */
+	public void delete(Members members) {
+		repository.delete(members);
+	}
 }

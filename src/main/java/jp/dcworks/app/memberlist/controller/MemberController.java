@@ -220,4 +220,28 @@ public class MemberController {
 		log.info("リダイレクトパラメータ。：requestMember={}, isSuccess={}", requestMember, isSuccess);
 		return "/member/complete";
 	}
+
+	/**
+	 * [GET]削除アクション。
+	 * @param membersId
+	 * @return
+	 */
+	@GetMapping("/delete/{membersId}")
+	public String delete(@PathVariable Long membersId,
+			RedirectAttributes redirectAttributes) {
+
+		// メンバー検索を行う。
+		Members members = membersService.findById(membersId);
+
+		// メンバーが取得できなかったらエラー。
+		if (members == null) {
+			// メンバーが取得できない場合は、Not Found。
+			throw new AppNotFoundException();
+		}
+
+		membersService.delete(members);
+
+		redirectAttributes.addFlashAttribute("isSuccess", "true");
+		return "redirect:/";
+	}
 }
