@@ -31,6 +31,7 @@ public class HomeController {
 	/**
 	 * [GET]メンバー一覧画面のアクション。
 	 *
+	 * @param isSuccess 削除完了フラグ
 	 * @param model 入力フォームのオブジェクト
 	 * @return テンプレートpath
 	 */
@@ -38,8 +39,10 @@ public class HomeController {
 	public String index(@ModelAttribute("isSuccess") String isSuccess,
 			Model model) {
 
+		log.info("メンバー一覧画面のアクションが呼ばれました。");
+
 		// トピック全件取得する。
-		List<Members> membersList = membersService.findAllTopics();
+		List<Members> membersList = membersService.findAllMembers();
 		model.addAttribute("membersList", membersList);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
 

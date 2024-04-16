@@ -2,7 +2,6 @@ package jp.dcworks.app.memberlist.controller;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.dcworks.app.memberlist.AppNotFoundException;
@@ -56,10 +54,9 @@ public class MemberController {
 	/**
 	 * [GET]メンバー入力フォームのアクション。
 	 *
+	 * @param membersId メンバーID
 	 * @param model 入力フォームのオブジェクト
 	 * @return テンプレートpath
-	 * @throws NoHandlerFoundException
-	 * @throws NotFoundException
 	 */
 	@GetMapping("/{membersId}")
 	public String index(@PathVariable Long membersId, Model model) {
@@ -143,13 +140,15 @@ public class MemberController {
 	/**
 	 * [POST]メンバー編集アクション。
 	 *
+	 * @param membersId メンバーID
 	 * @param requestMember 入力フォームの内容
 	 * @param result バリデーション結果
 	 * @param redirectAttributes リダイレクト時に使用するオブジェクト
 	 * @return テンプレートpath
 	 */
 	@PostMapping("/regist/{membersId}")
-	public String regist(@PathVariable Long membersId, @Validated @ModelAttribute RequestMember requestMember,
+	public String regist(@PathVariable Long membersId,
+			@Validated @ModelAttribute RequestMember requestMember,
 			BindingResult result,
 			RedirectAttributes redirectAttributes) {
 
@@ -191,7 +190,7 @@ public class MemberController {
 	/**
 	 * [GET]完了アクション。
 	 *
-	 * @param RequestMember 入力フォームの内容
+	 * @param requestMember 入力フォームの内容
 	 * @param isSuccess 正常の遷移であるか、否か。（true.正常、false.不正アクセス）
 	 * @param result バリデーション結果
 	 * @param redirectAttributes リダイレクト時に使用するオブジェクト
@@ -223,8 +222,9 @@ public class MemberController {
 
 	/**
 	 * [GET]削除アクション。
-	 * @param membersId
-	 * @return
+	 * @param membersId メンバーID
+	 * @param redirectAttributes リダイレクト時に使用するオブジェクト
+	 * @return テンプレートpath
 	 */
 	@GetMapping("/delete/{membersId}")
 	public String delete(@PathVariable Long membersId,

@@ -28,7 +28,7 @@ public class MembersService {
 	 *
 	 * @return メンバーを全件取得する。
 	 */
-	public List<Members> findAllTopics() {
+	public List<Members> findAllMembers() {
 		return (List<Members>) repository.findByOrderByIdAsc();
 	}
 
