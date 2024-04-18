@@ -1,15 +1,17 @@
 package jp.dcworks.app.memberlist.controller;
 
-import java.util.List;
-
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import jp.dcworks.app.memberlist.AppPageWrapper;
 import jp.dcworks.app.memberlist.entity.Members;
 import jp.dcworks.app.memberlist.service.MembersService;
 import lombok.extern.log4j.Log4j2;
@@ -36,16 +38,30 @@ public class HomeController {
 	 * @return テンプレートpath
 	 */
 	@GetMapping(path = { "", "/" })
-	public String index(@ModelAttribute("isSuccess") String isSuccess,
+	public String index(@RequestParam(defaultValue = "0") String page,
+			@ModelAttribute("isSuccess") String isSuccess,
 			Model model) {
 
 		log.info("メンバー一覧画面のアクションが呼ばれました。");
 
+		int ipage = NumberUtils.toInt(page, 0);
+
 		// トピック全件取得する。
-		List<Members> membersList = membersService.findAllMembers();
+		Page<Members> membersList = membersService.findAllMembers(ipage);
+		AppPageWrapper<Members> pager = new AppPageWrapper<Members>(membersList);
+
 		model.addAttribute("membersList", membersList);
+		model.addAttribute("pager", pager);
 		model.addAttribute("isSuccess", BooleanUtils.toBoolean(isSuccess));
 
 		return "home/index";
+	}
+
+	@GetMapping("/test/shoulder")
+	public String testShoulder(Model model) {
+		Page<Members> membersList = membersService.findAllMembers(0);
+		AppPageWrapper<Members> pager = new AppPageWrapper<Members>(membersList);
+		model.addAttribute("pager", pager);
+		return "common/shoulder_fragment";
 	}
 }

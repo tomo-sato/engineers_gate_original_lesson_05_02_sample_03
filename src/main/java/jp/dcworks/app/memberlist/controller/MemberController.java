@@ -1,5 +1,7 @@
 package jp.dcworks.app.memberlist.controller;
 
+import java.util.List;
+
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -113,13 +115,13 @@ public class MemberController {
 		}
 
 		// メンバー検索を行う。（※「メールアドレス」で検索を行い、すでに登録済みの場合エラー。）
-		Members members = membersService.findByEmailAddress(requestMember.getEmailAddress());
+		List<Members> membersList = membersService.findByEmailAddress(requestMember.getEmailAddress());
 
-		if (members != null) {
+		if (membersList != null) {
 			log.warn("すでに登録済みのメンバーです。：requestMember={}", requestMember);
 
 			// エラーメッセージをセット。
-			result.rejectValue("loginId", StringUtil.BLANK, "指定のメールアドレスのメンバーは、すでに登録されています。");
+			result.rejectValue("emailAddress", StringUtil.BLANK, "指定のメールアドレスのメンバーは、すでに登録されています。");
 
 			redirectAttributes.addFlashAttribute("validationErrors", result);
 			redirectAttributes.addFlashAttribute("requestMember", requestMember);

@@ -66,15 +66,104 @@
 
     <section class="section dashboard">
       <div class="row">
+        <div class="col-lg-2"></div>
+
         <div class="col-lg-8">
 
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">※ショルダー確認用サンプルカード</h5>
+
+              <!-- ======= ページネーション：カウンター ======= -->
+              <div th:fragment='paginationcounter' class="dataTable-bottom">
+                <div class="dataTable-info" th:text="|${pager.totalElements} 件中 ${pager.currentStartCount} - ${pager.currentEndCount} 件表示|">100 件中 1 - 10 件表示</div>
+                <nav class="dataTable-pagination">
+                  <ul class="dataTable-pagination-list"></ul>
+                </nav>
+              </div>
+              <!-- ======= /ページネーション：カウンター ======= -->
+
+              <!-- Table with stripped rows -->
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">名前</th>
+                    <th scope="col">メールアドレス</th>
+                    <th scope="col">登録日</th>
+                    <th scope="col" style="width: 80px;">削除</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"><a href="#">1</a></th>
+                    <td><a href="#">浅井 那奈</a></td>
+                    <td>asai_nana@example.com</td>
+                    <td>2016-05-25</td>
+                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><a href="#">2</a></th>
+                    <td><a href="#">根本 徹</a></td>
+                    <td>nemoto_tohru@example.com</td>
+                    <td>2014-12-05</td>
+                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><a href="#">3</a></th>
+                    <td><a href="#">西井 弘也</a></td>
+                    <td>nishii_hironari@example.com</td>
+                    <td>2011-08-12</td>
+                    <td><button type="button" class="btn btn-danger btn-sm">削除</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+
+              <!-- ======= ページネーション ======= -->
+              <nav th:fragment='paginationbar' th:if="${pager.getTotalPages > 0}" aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  <li th:if='${not pager.hasPreviousPage}' class="page-item disabled">
+                    <a class="page-link" href="#">&laquo; 前へ</a>
+                  </li>
+                  <li th:if='${pager.hasPreviousPage}' class="page-item">
+                    <a class="page-link" href="#" th:href='@{${pager.url}(page=${pager.currentNumber-2}, sort=${sort}, order=${order})}'>&laquo; 前へ</a>
+                  </li>
+
+                  <li class="page-item">
+                    <a class="page-link" th:if="${pager.isFirstPage}" th:href='@{${pager.url}(page=0, sort=${sort}, order=${order})}'>1</a>
+                  </li>
+
+                  <li class="page-item disabled" th:if="${pager.isStartPageOmitted}"><a class="page-link">…</a></li>
+
+
+                  <li class="page-item" th:each='item : ${pager.items}' th:classappend="${item.current} ? 'active' : ''">
+                    <a class="page-link" href="#" th:href='@{${pager.url}(page=${item.number-1}, sort=${sort}, order=${order})}' th:text='${item.number}'>1</a>
+                  </li>
+
+
+                  <li class="page-item disabled" th:if="${pager.isEndPageOmitted}"><a class="page-link">…</a></li>
+
+                  <li class="page-item">
+                    <a class="page-link" th:if="${pager.isLastPage}" th:href='@{${pager.url}(page=${pager.getTotalPages-1}, sort=${sort}, order=${order})}' th:text='${pager.getTotalPages}'></a>
+                  </li>
+
+                  <li th:if='${not pager.hasNextPage}' class="page-item disabled">
+                    <a class="page-link" href="#">次へ &raquo;</a>
+                  </li>
+                  <li th:if='${pager.hasNextPage}' class="page-item">
+                    <a class="page-link" href="#" th:href='@{${pager.url}(page=${pager.currentNumber}, sort=${sort}, order=${order})}'>次へ &raquo;</a>
+                  </li>
+                </ul>
+              </nav>
+              <!-- ======= /ページネーション ======= -->
+
             </div>
           </div>
 
         </div>
+
+        <div class="col-lg-2"></div>
       </div>
     </section>
   </main><!-- End #main -->

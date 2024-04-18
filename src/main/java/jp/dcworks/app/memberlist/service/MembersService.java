@@ -1,8 +1,15 @@
 package jp.dcworks.app.memberlist.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import jp.dcworks.app.memberlist.dto.RequestMember;
@@ -28,8 +35,13 @@ public class MembersService {
 	 *
 	 * @return メンバーを全件取得する。
 	 */
-	public List<Members> findAllMembers() {
-		return (List<Members>) repository.findByOrderByIdAsc();
+	public Page<Members> findAllMembers(Integer page) {
+	    List<Order> orderList = new ArrayList<Order>();
+	    orderList.add(new Order(Direction.ASC, "id"));
+
+	    Pageable pageable = PageRequest.of(page, 10, Sort.by(orderList));
+
+		return repository.findByOrderByIdAsc(pageable);
 	}
 
 	/**
@@ -55,13 +67,13 @@ public class MembersService {
 	 * @param emailAddress メールアドレス
 	 * @return メンバー情報を返す。
 	 */
-	public Members findByEmailAddress(String emailAddress) {
+	public List<Members> findByEmailAddress(String emailAddress) {
 		log.info("メンバーを検索します。：emailAddress={}", emailAddress);
 
-		Members members = repository.findByEmailAddress(emailAddress);
-		log.info("メンバー検索結果。：emailAddress={}, members={}", emailAddress, members);
+		List<Members> membersList = repository.findByEmailAddress(emailAddress);
+		log.info("メンバー検索結果。：emailAddress={}, membersList={}", emailAddress, membersList);
 
-		return members;
+		return membersList;
 	}
 
 	/**

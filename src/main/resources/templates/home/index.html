@@ -29,6 +29,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
 
+              <div th:replace="~{common/shoulder_fragment::paginationcounter}"></div>
+
               <!-- Table with stripped rows -->
               <table class="table table-striped">
                 <thead>
@@ -53,6 +55,8 @@
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
+
+              <div th:replace="~{common/shoulder_fragment::paginationbar}"></div>
 
             </div>
           </div>
