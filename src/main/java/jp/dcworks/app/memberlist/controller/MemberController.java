@@ -117,7 +117,7 @@ public class MemberController {
 		// メンバー検索を行う。（※「メールアドレス」で検索を行い、すでに登録済みの場合エラー。）
 		List<Members> membersList = membersService.findByEmailAddress(requestMember.getEmailAddress());
 
-		if (membersList != null) {
+		if (membersList != null && !membersList.isEmpty()) {
 			log.warn("すでに登録済みのメンバーです。：requestMember={}", requestMember);
 
 			// エラーメッセージをセット。
