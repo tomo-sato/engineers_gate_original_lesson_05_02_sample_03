@@ -14,19 +14,31 @@ import lombok.Getter;
  */
 @Getter
 public class AppPageWrapper<T> {
+
+	/** ページングで表示するページアイテムの最大表示件数 */
 	public static final int MAX_PAGE_ITEM_DISPLAY = 3;
 
+	/** SpringBoot Pageクラス */
 	private Page<T> page;
-	private List<PageItem> items;
+	/** ページングで表示するページアイテム */
+	private List<PageItem> pageItem;
+	/** 現在のページ番号 */
 	private int currentNumber;
-	private String url;
+	/** ベースURL */
+	private String baseUrl;
+	/** 1ページ目であるか否か */
 	private boolean isFirstPage;
+	/** 最後のページであるか否か */
 	private boolean isLastPage;
+	/** 前の省略表示が必要か否か */
 	private boolean isStartPageOmitted;
+	/** 後の省略表示が必要か否か */
 	private boolean isEndPageOmitted;
 
 	/**
 	 * コンストラクタ.
+	 *
+	 * @param page SpringBoot Pageクラスを指定。
 	 */
 	public AppPageWrapper(Page<T> page) {
 		this(page, "");
@@ -38,10 +50,10 @@ public class AppPageWrapper<T> {
 	 * @param page SpringBoot Pageクラスを指定。
 	 * @param url ベースURLを指定。
 	 */
-	public AppPageWrapper(Page<T> page, String url) {
+	public AppPageWrapper(Page<T> page, String baseUrl) {
 		this.page = page;
-		this.url = url;
-		items = new ArrayList<PageItem>();
+		this.baseUrl = baseUrl;
+		pageItem = new ArrayList<PageItem>();
 
 		currentNumber = page.getNumber() + 1;
 
@@ -124,7 +136,7 @@ public class AppPageWrapper<T> {
 
 		// 表示するページアイテムをリストに追加。
 		for (int i = 0; i < size; i++) {
-			items.add(new PageItem((start + i), ((start + i) == currentNumber)));
+			pageItem.add(new PageItem((start + i), ((start + i) == currentNumber)));
 		}
 	}
 
